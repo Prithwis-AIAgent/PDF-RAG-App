@@ -2,7 +2,7 @@ import io
 from typing import List
 from pypdf import PdfReader
 from langchain_core.documents import Document
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 class PDFProcessor:
     def __init__(self, chunk_size: int = 1000, chunk_overlap: int = 100):
