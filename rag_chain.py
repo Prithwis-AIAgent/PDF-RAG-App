@@ -45,7 +45,7 @@ class RAGChain:
         elif self.provider == "Gemini":
             if not self.api_key:
                 raise ValueError("Google API Key is required.")
-            self.embedding_model = GoogleGenerativeAIEmbeddings(model="models/text-embedding-004", google_api_key=self.api_key)
+            self.embedding_model = GoogleGenerativeAIEmbeddings(model="models/embedding-001", google_api_key=self.api_key)
             self.llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash", google_api_key=self.api_key)
             
         else:
@@ -62,6 +62,7 @@ class RAGChain:
                     embedding_function=self.embedding_model
                 )
                 self.retriever = self.vectorstore.as_retriever(search_kwargs={"k": 5})
+                # Check availability by retrieving zero items or just init chain
                 self._create_chain()
                 print(f"Loaded existing vector store for {self.provider}.")
             except Exception as e:
@@ -71,17 +72,20 @@ class RAGChain:
         """
         Initializes or updates the ChromaDB vector store with documents.
         """
-        if self.vectorstore:
-            self.vectorstore.add_documents(documents)
-        else:
-            self.vectorstore = Chroma.from_documents(
-                documents=documents,
-                embedding=self.embedding_model,
-                persist_directory=self.db_path
-            )
-        
-        self.retriever = self.vectorstore.as_retriever(search_kwargs={"k": 5})
-        self._create_chain()
+        try:
+            if self.vectorstore:
+                self.vectorstore.add_documents(documents)
+            else:
+                self.vectorstore = Chroma.from_documents(
+                    documents=documents,
+                    embedding=self.embedding_model,
+                    persist_directory=self.db_path
+                )
+            
+            self.retriever = self.vectorstore.as_retriever(search_kwargs={"k": 5})
+            self._create_chain()
+        except Exception as e:
+            raise RuntimeError(f"Failed to initialize vector store: {str(e)}")
 
     def clear_vectorstore(self):
         """

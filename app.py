@@ -92,12 +92,15 @@ with st.sidebar:
                     chunks = st.session_state.pdf_processor.process_pdfs(new_files)
                     
                     # Update Vector Store
-                    st.session_state.rag_chain.initialize_vectorstore(chunks)
-                    
-                    # Update processed files list
-                    st.session_state.processed_files.extend([f.name for f in new_files])
-                    
-                    st.success(f"Indexed {len(new_files)} documents with {len(chunks)} chunks!")
+                    try:
+                        st.session_state.rag_chain.initialize_vectorstore(chunks)
+                        
+                        # Update processed files list
+                        st.session_state.processed_files.extend([f.name for f in new_files])
+                        
+                        st.success(f"Indexed {len(new_files)} documents with {len(chunks)} chunks!")
+                    except Exception as e:
+                        st.error(f"Failed to process documents: {e}")
                 else:
                     st.info("No new files to process.")
         else:
