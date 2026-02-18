@@ -1,7 +1,7 @@
 import io
 from typing import List
 from pypdf import PdfReader
-from langchain.docstore.document import Document
+from langchain_core.documents import Document
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 
 class PDFProcessor:
