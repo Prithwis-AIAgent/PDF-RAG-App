@@ -1,0 +1,8 @@
+streamlit
+langchain
+langchain-community
+pypdf
+chromadb
+ollama
+langchain-openai
+langchain-google-genai
