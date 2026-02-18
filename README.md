@@ -10,9 +10,16 @@ A local RAG (Retrieval-Augmented Generation) application for chatting with PDF d
 - **Source Citations**: Answers include filenames and page numbers.
 - **Persistent Database**: ChromaDB vector store is saved locally.
 
-> [!IMPORTANT]
-> **Deployment Note**: This application is designed to run **LOCALLY** because it relies on [Ollama](https://ollama.com/) running on your machine.
-> It **cannot** be deployed directly to Streamlit Cloud (which doesn't support running local LLMs). To deploy to the cloud, you would need to switch to an API-based provider (like OpenAI) or host it on a GPU server.
+- **Persistent Database**: ChromaDB vector store is saved locally.
+
+> [!TIP]
+> **Deployment Options**:
+> - **Local**: Run with Ollama for privacy/offline use.
+> - **Cloud**: Deploy to **Streamlit Cloud** using **Gemini** or **OpenAI**.
+>   - *Note: Ollama will NOT work on Streamlit Cloud.*
+
+## Short Description
+A powerful PDF Q&A application built with Streamlit and LangChain. Chat with your documents using **local LLMs (Ollama)** or **cloud models (Gemini 1.5 Flash, OpenAI)**. Features smart chunking, source citations, and persistent memory.
 
 ## Prerequisites
 
@@ -65,3 +72,14 @@ A local RAG (Retrieval-Augmented Generation) application for chatting with PDF d
 - `rag_chain.py`: Manages the RAG pipeline (Retrieval + Generation).
 - `requirements.txt`: Python dependencies.
 - `chroma_db/`: Directory where vector embeddings are stored (created automatically).
+
+## Deploy to Streamlit Cloud
+
+1.  Push this code to GitHub.
+2.  Go to [share.streamlit.io](https://share.streamlit.io/).
+3.  Deploy the app by selecting your repository and `app.py`.
+4.  **Important**: In the Streamlit Cloud dashboard, go to **App Settings** -> **Secrets** and add:
+    ```toml
+    GEMINI_API_KEY = "your-api-key-here"
+    ```
+5.  Launch! Select "Gemini (Cloud)" in the app sidebar.
