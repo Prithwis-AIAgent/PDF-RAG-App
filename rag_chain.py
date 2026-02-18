@@ -46,7 +46,7 @@ class RAGChain:
             if not self.api_key:
                 raise ValueError("Google API Key is required.")
             self.embedding_model = GoogleGenerativeAIEmbeddings(model="models/embedding-001", google_api_key=self.api_key)
-            self.llm = ChatGoogleGenerativeAI(model="gemini-pro", google_api_key=self.api_key)
+            self.llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash", google_api_key=self.api_key)
             
         else:
             raise ValueError(f"Unsupported provider: {self.provider}")

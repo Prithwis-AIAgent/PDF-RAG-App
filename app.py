@@ -50,7 +50,8 @@ with st.sidebar:
         api_key = st.text_input("Enter OpenAI API Key", type="password")
         provider_name = "OpenAI"
     elif provider == "Gemini (Cloud)":
-        api_key = st.text_input("Enter Google API Key", type="password")
+        default_key = st.secrets.get("GEMINI_API_KEY", "")
+        api_key = st.text_input("Enter Google API Key", value=default_key, type="password")
         provider_name = "Gemini"
     else:
         provider_name = "Ollama"
