@@ -7,3 +7,4 @@ ollama
 langchain-openai
 langchain-google-genai
 langchain-text-splitters
+pysqlite3-binary
